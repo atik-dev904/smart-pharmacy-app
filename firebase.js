@@ -8,64 +8,54 @@ import { initializeApp } from
 "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
 
 import {
-    getAuth,
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    sendPasswordResetEmail,
-    signOut,
-    onAuthStateChanged,
-    updatePassword,
-    reauthenticateWithCredential,
-    EmailAuthProvider
+getAuth,
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword,
+sendPasswordResetEmail,
+signOut,
+onAuthStateChanged,
+updatePassword,
+reauthenticateWithCredential,
+EmailAuthProvider
 } from
 "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
 
 import {
-    getFirestore,
-    doc,
-    collection,
-    addDoc,
-    getDoc,
-    getDocs,
-    setDoc,
-    updateDoc,
-    deleteDoc,
-    query,
-    where,
-    orderBy,
-    limit,
-    serverTimestamp,
-    runTransaction,
-    writeBatch,
-    increment,
-    onSnapshot,
-    Timestamp
+getFirestore,
+doc,
+collection,
+addDoc,
+getDoc,
+getDocs,
+setDoc,
+updateDoc,
+deleteDoc,
+query,
+where,
+orderBy,
+limit,
+serverTimestamp,
+runTransaction,
+writeBatch,
+increment,
+onSnapshot,
+Timestamp
 } from
 "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
-
 // ============================================
-// FIREBASE PROJECT CONFIGURATION
+// FIREBASE CONFIGURATION
 // ============================================
 
 const firebaseConfig = {
-
-    apiKey: "AIzaSyF1FJ2jex_QRZiKZST8lguU8p2_78O3vDg",
-
-    authDomain: "smart-pharmacy-b3db6.firebaseapp.com",
-
-    projectId: "smart-pharmacy-b3db6",
-
-    storageBucket: "smart-pharmacy-b3db6.firebasestorage.app",
-
-    messagingSenderId: "1061575527322",
-
-    appId: "1:1061575527322:web:97d52f878713eba4850823",
-
-    measurementId: "G-906X72NYJK"
-
+apiKey: "AIzaSyA1FJ2jex_QRZiKZST8lguU8p2_78O3vDg",
+authDomain: "smart-pharmacy-b3db6.firebaseapp.com",
+projectId: "smart-pharmacy-b3db6",
+storageBucket: "smart-pharmacy-b3db6.firebasestorage.app",
+messagingSenderId: "1061575527322",
+appId: "1:1061575527322:web:97d52f878713eba4850823",
+measurementId: "G-906X72NYJK"
 };
-
 
 // ============================================
 // INITIALIZE FIREBASE
@@ -73,96 +63,57 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-
 // ============================================
-// AUTHENTICATION
+// INITIALIZE AUTHENTICATION
 // ============================================
 
 const auth = getAuth(app);
 
-
 // ============================================
-// FIRESTORE DATABASE
+// INITIALIZE FIRESTORE
 // ============================================
 
 const db = getFirestore(app);
 
-
 // ============================================
-// EXPORT FIREBASE SERVICES
+// EXPORT SERVICES
 // ============================================
 
 export {
+app,
+auth,
+db,
 
-    app,
+// Authentication
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword,
+sendPasswordResetEmail,
+signOut,
+onAuthStateChanged,
+updatePassword,
+reauthenticateWithCredential,
+EmailAuthProvider,
 
-    auth,
-
-    db,
-
-
-    // Authentication
-
-    createUserWithEmailAndPassword,
-
-    signInWithEmailAndPassword,
-
-    sendPasswordResetEmail,
-
-    signOut,
-
-    onAuthStateChanged,
-
-    updatePassword,
-
-    reauthenticateWithCredential,
-
-    EmailAuthProvider,
-
-
-    // Firestore
-
-    doc,
-
-    collection,
-
-    addDoc,
-
-    getDoc,
-
-    getDocs,
-
-    setDoc,
-
-    updateDoc,
-
-    deleteDoc,
-
-    query,
-
-    where,
-
-    orderBy,
-
-    limit,
-
-    serverTimestamp,
-
-    runTransaction,
-
-    writeBatch,
-
-    increment,
-
-    onSnapshot,
-
-    Timestamp
+// Firestore
+doc,
+collection,
+addDoc,
+getDoc,
+getDocs,
+setDoc,
+updateDoc,
+deleteDoc,
+query,
+where,
+orderBy,
+limit,
+serverTimestamp,
+runTransaction,
+writeBatch,
+increment,
+onSnapshot,
+Timestamp
 
 };
 
-
-// ============================================
-// FIREBASE INITIALIZATION MESSAGE
-// ============================================
-
-console.log("SMART PHARMACY Firebase initialized.");lid
+console.log("SMART PHARMACY Firebase initialized successfully.");
