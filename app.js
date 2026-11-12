@@ -1,0 +1,11 @@
+import {auth,db} from "./firebase.js";
+import {createUserWithEmailAndPassword,signInWithEmailAndPassword,sendPasswordResetEmail,onAuthStateChanged,signOut,updateProfile} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+import {doc,setDoc,getDoc,serverTimestamp} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+const $=id=>document.getElementById(id), msg=t=>$("msg").textContent=t;
+$("regTab").onclick=()=>{$("regForm").classList.remove("hide");$("logForm").classList.add("hide");msg("")};
+$("loginTab").onclick=()=>{$("logForm").classList.remove("hide");$("regForm").classList.add("hide");msg("")};
+$("regForm").onsubmit=async e=>{e.preventDefault();try{let shop=$("shop").value.trim(),owner=$("owner").value.trim(),phone=$("phone").value.trim(),email=$("email").value.trim();let c=await createUserWithEmailAndPassword(auth,email,$("pass").value);await updateProfile(c.user,{displayName:owner});await setDoc(doc(db,"pharmacies",c.user.uid),{shopName:shop,ownerName:owner,phone,email,ownerUid:c.user.uid,status:"active",createdAt:serverTimestamp()});await setDoc(doc(db,"pharmacies",c.user.uid,"members",c.user.uid),{uid:c.user.uid,name:owner,email,phone,role:"owner",status:"active"});msg("দোকান নিবন্ধন সফল হয়েছে।")}catch(e){msg(e.message)}};
+$("logForm").onsubmit=async e=>{e.preventDefault();try{await signInWithEmailAndPassword(auth,$("loginEmail").value.trim(),$("loginPass").value);msg("")}catch(e){msg("লগইন হয়নি: "+e.message)}};
+$("forgot").onclick=async()=>{let email=$("loginEmail").value.trim();if(!email)return msg("আগে নিবন্ধিত ইমেইল লিখুন।");try{await sendPasswordResetEmail(auth,email);msg("পাসওয়ার্ড রিসেটের নির্দেশনা ইমেইলে পাঠানো হয়েছে।")}catch(e){msg(e.message)}};
+$("logout").onclick=()=>signOut(auth);
+onAuthStateChanged(auth,async user=>{if(!user){$("auth").classList.remove("hide");$("dash").classList.add("hide");return}try{let s=await getDoc(doc(db,"pharmacies",user.uid));if(!s.exists())throw Error("দোকানের তথ্য পাওয়া যায়নি");$("welcome").textContent="স্বাগতম, "+s.data().ownerName;$("details").textContent=s.data().shopName+" · "+s.data().phone;$("auth").classList.add("hide");$("dash").classList.remove("hide")}catch(e){msg(e.message);await signOut(auth)}});
