@@ -1,1 +1,576 @@
-<!doctype html><html lang="bn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SMART PHARMACY</title><link rel="stylesheet" href="css/style.css"></head><body><header>💊 SMART PHARMACY</header><main><section id="auth" class="card"><h2>দোকান নিবন্ধন / লগইন</h2><div class="tabs"><button id="regTab">নতুন দোকান</button><button id="loginTab">লগইন</button></div><form id="regForm"><label>দোকানের নাম<input id="shop" required></label><label>মালিকের নাম<input id="owner" required></label><label>মোবাইল<input id="phone" required></label><label>ইমেইল<input id="email" type="email" required></label><label>পাসওয়ার্ড<input id="pass" type="password" minlength="8" required></label><button>দোকান নিবন্ধন</button></form><form id="logForm" class="hide"><label>ইমেইল<input id="loginEmail" type="email" required></label><label>পাসওয়ার্ড<input id="loginPass" type="password" required></label><button>লগইন</button><button type="button" id="forgot" class="link">পাসওয়ার্ড ভুলে গেছেন?</button></form><p id="msg"></p></section><section id="dash" class="card hide"><h2 id="welcome">ড্যাশবোর্ড</h2><p id="details"></p><div class="grid"><div>💊 ওষুধের স্টক</div><div>🧾 বিক্রি ও বিল</div><div>📦 ক্রয়</div><div>👥 কর্মচারী</div><div>📊 রিপোর্ট</div><div>🛟 সহায়তা</div></div><p>এটি প্রাথমিক সংস্করণ; পূর্ণ ফিচার ও নিরাপত্তা সেটআপ পরবর্তী ধাপে হবে।</p><button id="logout">লগআউট</button></section></main><script type="module" src="js/app.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SMART PHARMACY</title>
+
+    <meta name="theme-color" content="#087f5b">
+    <meta name="description" content="SMART PHARMACY - Pharmacy Management System">
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="top-header">
+        <div class="brand">
+            <div class="brand-icon">💊</div>
+            <div>
+                <h1>SMART PHARMACY</h1>
+                <p>Pharmacy Management System</p>
+            </div>
+        </div>
+
+        <div class="header-actions">
+            <button id="languageBtn" class="language-btn" type="button">
+                English
+            </button>
+        </div>
+    </header>
+
+
+    <!-- Main Container -->
+    <main class="main-container">
+
+        <!-- Authentication Section -->
+        <section id="authSection" class="auth-section">
+
+            <div class="auth-heading">
+                <h2>স্বাগতম</h2>
+                <p>আপনার ফার্মেসি পরিচালনা করুন সহজেই</p>
+            </div>
+
+            <!-- Registration Form -->
+            <div id="registerBox" class="auth-card">
+
+                <h3>নতুন ফার্মেসি নিবন্ধন</h3>
+
+                <form id="registerForm">
+
+                    <label for="shopName">ফার্মেসির নাম *</label>
+                    <input
+                        type="text"
+                        id="shopName"
+                        placeholder="ফার্মেসির নাম লিখুন"
+                        required
+                    >
+
+                    <label for="ownerName">মালিকের নাম *</label>
+                    <input
+                        type="text"
+                        id="ownerName"
+                        placeholder="মালিকের নাম লিখুন"
+                        required
+                    >
+
+                    <label for="ownerMobile">মোবাইল নম্বর *</label>
+                    <input
+                        type="tel"
+                        id="ownerMobile"
+                        placeholder="01XXXXXXXXX"
+                        required
+                    >
+
+                    <label for="ownerEmail">ইমেইল ঠিকানা *</label>
+                    <input
+                        type="email"
+                        id="ownerEmail"
+                        placeholder="example@gmail.com"
+                        required
+                    >
+
+                    <label for="registerPassword">পাসওয়ার্ড *</label>
+                    <input
+                        type="password"
+                        id="registerPassword"
+                        placeholder="কমপক্ষে ৬ অক্ষরের পাসওয়ার্ড"
+                        minlength="6"
+                        required
+                    >
+
+                    <label for="confirmPassword">পাসওয়ার্ড নিশ্চিত করুন *</label>
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        placeholder="আবার পাসওয়ার্ড লিখুন"
+                        minlength="6"
+                        required
+                    >
+
+                    <button type="submit" class="primary-btn">
+                        ফার্মেসি নিবন্ধন করুন
+                    </button>
+
+                </form>
+
+                <p class="auth-switch">
+                    আগে থেকেই অ্যাকাউন্ট আছে?
+                    <button type="button" id="showLoginBtn">
+                        লগইন করুন
+                    </button>
+                </p>
+
+            </div>
+
+
+            <!-- Login Form -->
+            <div id="loginBox" class="auth-card hidden">
+
+                <h3>ফার্মেসি লগইন</h3>
+
+                <form id="loginForm">
+
+                    <label for="loginEmail">ইমেইল ঠিকানা</label>
+                    <input
+                        type="email"
+                        id="loginEmail"
+                        placeholder="আপনার ইমেইল লিখুন"
+                        required
+                    >
+
+                    <label for="loginPassword">পাসওয়ার্ড</label>
+                    <input
+                        type="password"
+                        id="loginPassword"
+                        placeholder="আপনার পাসওয়ার্ড লিখুন"
+                        required
+                    >
+
+                    <button type="submit" class="primary-btn">
+                        লগইন করুন
+                    </button>
+
+                </form>
+
+                <button type="button" id="forgotPasswordBtn" class="text-btn">
+                    পাসওয়ার্ড ভুলে গেছেন?
+                </button>
+
+                <p class="auth-switch">
+                    নতুন ফার্মেসি?
+                    <button type="button" id="showRegisterBtn">
+                        নিবন্ধন করুন
+                    </button>
+                </p>
+
+            </div>
+
+            <div id="authMessage" class="message-box" aria-live="polite"></div>
+
+        </section>
+
+
+        <!-- Application Section -->
+        <section id="appSection" class="app-section hidden">
+
+            <!-- Shop Information -->
+            <div class="shop-header-card">
+                <div>
+                    <h2 id="displayShopName">SMART PHARMACY</h2>
+                    <p id="displayOwnerName">ফার্মেসির মালিক</p>
+                    <p id="displayMobile">মোবাইল নম্বর</p>
+                </div>
+
+                <button id="logoutBtn" class="logout-btn" type="button">
+                    লগআউট
+                </button>
+            </div>
+
+
+            <!-- Navigation -->
+            <nav class="main-navigation">
+
+                <button class="nav-btn active" data-page="dashboardPage">
+                    🏠 ড্যাশবোর্ড
+                </button>
+
+                <button class="nav-btn" data-page="stockPage">
+                    💊 ওষুধের স্টক
+                </button>
+
+                <button class="nav-btn" data-page="salesPage">
+                    🧾 বিক্রয় ও বিল
+                </button>
+
+                <button class="nav-btn" data-page="purchasePage">
+                    📦 ক্রয়
+                </button>
+
+                <button class="nav-btn" data-page="employeePage">
+                    👥 কর্মচারী
+                </button>
+
+                <button class="nav-btn" data-page="reportsPage">
+                    📊 রিপোর্ট
+                </button>
+
+                <button class="nav-btn" data-page="supportPage">
+                    🛟 সাপোর্ট
+                </button>
+
+            </nav>
+
+
+            <!-- Dashboard -->
+            <section id="dashboardPage" class="content-page">
+
+                <div class="page-heading">
+                    <h2>ড্যাশবোর্ড</h2>
+                    <p>আপনার ফার্মেসির সার্বিক অবস্থা</p>
+                </div>
+
+                <div class="dashboard-grid">
+
+                    <div class="dashboard-card">
+                        <span>💰</span>
+                        <h3>আজকের বিক্রয়</h3>
+                        <strong id="todaySales">৳ 0.00</strong>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <span>📦</span>
+                        <h3>মোট ক্রয়</h3>
+                        <strong id="totalPurchase">৳ 0.00</strong>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <span>💵</span>
+                        <h3>আজকের লাভ</h3>
+                        <strong id="todayProfit">৳ 0.00</strong>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <span>⚠️</span>
+                        <h3>কম স্টক</h3>
+                        <strong id="lowStockCount">0</strong>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <span>⏰</span>
+                        <h3>মেয়াদ শেষের সতর্কতা</h3>
+                        <strong id="expiryCount">0</strong>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <span>👥</span>
+                        <h3>মোট কর্মচারী</h3>
+                        <strong id="employeeCount">0</strong>
+                    </div>
+
+                </div>
+
+                <div class="information-card">
+                    <h3>📢 গুরুত্বপূর্ণ তথ্য</h3>
+                    <p>
+                        SMART PHARMACY-তে আপনার ওষুধের স্টক,
+                        বিক্রয়, ক্রয় এবং হিসাব পরিচালনা করুন।
+                    </p>
+                </div>
+
+            </section>
+
+
+            <!-- Medicine Stock -->
+            <section id="stockPage" class="content-page hidden">
+
+                <div class="page-heading">
+                    <h2>💊 ওষুধের স্টক</h2>
+                    <p>নতুন ওষুধ ও ব্যাচভিত্তিক স্টক যোগ করুন</p>
+                </div>
+
+                <div class="form-card">
+
+                    <h3>নতুন স্টক যোগ করুন</h3>
+
+                    <form id="stockForm">
+
+                        <div class="form-grid">
+
+                            <div>
+                                <label for="medicineName">
+                                    ওষুধের নাম *
+                                </label>
+                                <input
+                                    type="text"
+                                    id="medicineName"
+                                    placeholder="ওষুধের নাম"
+                                    required
+                                >
+                            </div>
+
+                            <div>
+                                <label for="medicineCompany">
+                                    কোম্পানি / প্রস্তুতকারক *
+                                </label>
+                                <input
+                                    type="text"
+                                    id="medicineCompany"
+                                    placeholder="কোম্পানির নাম"
+                                    required
+                                >
+                            </div>
+
+                            <div>
+                                <label for="boxQuantity">
+                                    বক্স / কার্টনের সংখ্যা (ঐচ্ছিক)
+                                </label>
+                                <input
+                                    type="number"
+                                    id="boxQuantity"
+                                    min="0"
+                                    placeholder="বক্সের সংখ্যা"
+                                >
+                            </div>
+
+                            <div>
+                                <label for="piecesPerBox">
+                                    প্রতি বক্সে পিস
+                                </label>
+                                <input
+                                    type="number"
+                                    id="piecesPerBox"
+                                    min="1"
+                                    placeholder="প্রতি বক্সে কত পিস"
+                                >
+                            </div>
+
+                            <div>
+                                <label for="totalPieces">
+                                    মোট পিস *
+                                </label>
+                                <input
+                                    type="number"
+                                    id="totalPieces"
+                                    min="1"
+                                    placeholder="মোট পিসের সংখ্যা"
+                                    required
+                                >
+                            </div>
+
+                            <div>
+                                <label for="purchasePrice">
+                                    প্রতি পিস ক্রয়মূল্য *
+                                </label>
+                                <input
+                                    type="number"
+                                    id="purchasePrice"
+                                    min="0"
+                                    step="0.01"
+                                    placeholder="৳"
+                                    required
+                                >
+                            </div>
+
+                            <div>
+                                <label for="sellingPrice">
+                                    প্রতি পিস বিক্রয়মূল্য *
+                                </label>
+                                <input
+                                    type="number"
+                                    id="sellingPrice"
+                                    min="0"
+                                    step="0.01"
+                                    placeholder="৳"
+                                    required
+                                >
+                            </div>
+
+                            <div>
+                                <label for="rackNumber">
+                                    র‍্যাক নম্বর (ঐচ্ছিক)
+                                </label>
+                                <input
+                                    type="text"
+                                    id="rackNumber"
+                                    placeholder="যেমন: A-01"
+                                >
+                            </div>
+
+                            <div>
+                                <label for="batchNumber">
+                                    ব্যাচ নম্বর (ঐচ্ছিক)
+                                </label>
+                                <input
+                                    type="text"
+                                    id="batchNumber"
+                                    placeholder="ব্যাচ নম্বর"
+                                >
+                            </div>
+
+                            <div>
+                                <label for="expiryDate">
+                                    মেয়াদ শেষের তারিখ *
+                                </label>
+                                <input
+                                    type="date"
+                                    id="expiryDate"
+                                    required
+                                >
+                            </div>
+
+                        </div>
+
+                        <button type="submit" class="primary-btn">
+                            স্টক যোগ করুন
+                        </button>
+
+                    </form>
+
+                </div>
+
+                <div class="table-card">
+                    <h3>ওষুধের তালিকা</h3>
+
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ওষুধ</th>
+                                    <th>কোম্পানি</th>
+                                    <th>মোট পিস</th>
+                                    <th>ক্রয়মূল্য</th>
+                                    <th>বিক্রয়মূল্য</th>
+                                    <th>র‍্যাক</th>
+                                    <th>মেয়াদ</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="stockTableBody">
+                                <tr>
+                                    <td colspan="7">
+                                        এখনো কোনো স্টক যোগ করা হয়নি।
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </section>
+
+
+            <!-- Sales -->
+            <section id="salesPage" class="content-page hidden">
+
+                <div class="page-heading">
+                    <h2>🧾 বিক্রয় ও বিল</h2>
+                    <p>ওষুধ বিক্রি ও বিল তৈরি করুন</p>
+                </div>
+
+                <div class="form-card">
+
+                    <h3>ওষুধ খুঁজুন</h3>
+
+                    <input
+                        type="search"
+                        id="medicineSearch"
+                        placeholder="ওষুধের নাম লিখে খুঁজুন..."
+                    >
+
+                    <div id="medicineSearchResults"></div>
+
+                    <h3>বিক্রয়ের তালিকা</h3>
+
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ওষুধ</th>
+                                    <th>পরিমাণ</th>
+                                    <th>প্রতি পিস মূল্য</th>
+                                    <th>মোট</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="cartTableBody">
+                                <tr>
+                                    <td colspan="4">
+                                        এখনো কোনো ওষুধ নির্বাচন করা হয়নি।
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3>
+                        সর্বমোট:
+                        <span id="cartTotal">৳ 0.00</span>
+                    </h3>
+
+                    <button id="completeSaleBtn" class="primary-btn" type="button">
+                        বিক্রয় সম্পন্ন করুন
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- Purchase -->
+            <section id="purchasePage" class="content-page hidden">
+
+                <div class="page-heading">
+                    <h2>📦 ক্রয় ব্যবস্থাপনা</h2>
+                    <p>ওষুধ কেনা ও সরবরাহকারীর তথ্য</p>
+                </div>
+
+                <div class="information-card">
+                    <p>
+                        ব্যাচভিত্তিক ক্রয় ও সরবরাহকারীর হিসাব
+                        পরবর্তী উন্নয়ন ধাপে যুক্ত করা হবে।
+                    </p>
+                </div>
+
+            </section>
+
+
+            <!-- Employees -->
+            <section id="employeePage" class="content-page hidden">
+
+                <div class="page-heading">
+                    <h2>👥 কর্মচারী ব্যবস্থাপনা</h2>
+                    <p>কর্মচারীদের অ্যাকাউন্ট ও দায়িত্ব পরিচালনা করুন</p>
+                </div>
+
+                <div class="information-card">
+                    <p>
+                        মালিক কর্মচারীর অ্যাকাউন্ট তৈরি ও নিষ্ক্রিয়
+                        করতে পারবেন। এই ফিচার পরবর্তী ধাপে যুক্ত হবে।
+                    </p>
+                </div>
+
+            </section>
+
+
+            <!-- Reports -->
+            <section id="reportsPage" class="content-page hidden">
+
+                <div class="page-heading">
+                    <h2>📊 রিপোর্ট</h2>
+                    <p>বিক্রয়, ক্রয়, লাভ ও ব্যয়ের রিপোর্ট</p>
+                </div>
+
+                <div class="information-card">
+                    <p>
+                        বিস্তারিত রিপোর্ট ও PDF ডাউনলোড
+                        পরবর্তী ধাপে যুক্ত করা হবে।
+                    </p>
+                </div>
+
+            </section>
+
+
+            <!-- Support -->
+            <section id="supportPage" class="content-page hidden">
+
+                <div class="page-heading">
+                    <h2>🛟 সাপোর্ট সেন্টার</h2>
+                    <p>সাহায্য ও সমস্যা জানানোর ব্যবস্থা</p>
+                </div>
+
+                <div class="information-card">
+                    <p>
+                        প্রয়োজনে Developer Support
