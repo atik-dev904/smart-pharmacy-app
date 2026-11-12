@@ -1,0 +1,98 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(pharmacyId) {
+      return isSignedIn()
+        && request.auth.uid == pharmacyId;
+    }
+
+    function userExists(userId) {
+      return exists(
+        /databases/$(database)/documents/users/$(userId)
+      );
+    }
+
+    function isActiveMember(pharmacyId) {
+      return isSignedIn()
+        && userExists(request.auth.uid)
+        && get(
+          /databases/$(database)/documents/users/$(request.auth.uid)
+        ).data.pharmacyId == pharmacyId
+        && get(
+          /databases/$(database)/documents/users/$(request.auth.uid)
+        ).data.active == true;
+    }
+
+    function canAccessPharmacy(pharmacyId) {
+      return isOwner(pharmacyId)
+        || isActiveMember(pharmacyId);
+    }
+
+    // User profiles
+    match /users/{userId} {
+
+      allow read: if isSignedIn()
+        && (
+          request.auth.uid == userId
+          || (
+            resource.data.pharmacyId is string
+            && canAccessPharmacy(resource.data.pharmacyId)
+          )
+        );
+
+      allow create: if isSignedIn()
+        && request.auth.uid == userId
+        && request.resource.data.uid == userId
+        && request.resource.data.role == "owner"
+        && request.resource.data.pharmacyId == userId
+        && request.resource.data.active == true;
+
+      allow update: if isSignedIn()
+        && request.auth.uid == userId
+        && request.resource.data.uid == resource.data.uid
+        && request.resource.data.role == resource.data.role
+        && request.resource.data.pharmacyId == resource.data.pharmacyId;
+
+      allow delete: if false;
+    }
+
+    // Pharmacy information
+    match /pharmacies/{pharmacyId} {
+
+      allow read: if canAccessPharmacy(pharmacyId);
+
+      allow create: if isOwner(pharmacyId)
+        && request.resource.data.ownerId == pharmacyId;
+
+      allow update, delete: if isOwner(pharmacyId);
+
+      // Pharmacy subcollections
+      match /{collectionName}/{documentId} {
+
+        allow read, write: if
+          collectionName in [
+            "stock",
+            "sales",
+            "purchases",
+            "suppliers",
+            "customers",
+            "employees",
+            "transactions",
+            "supportRequests"
+          ]
+          && canAccessPharmacy(pharmacyId);
+      }
+    }
+
+    // Deny all other access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

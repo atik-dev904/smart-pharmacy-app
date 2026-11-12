@@ -3,505 +3,787 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#075e54">
 
     <title>SMART PHARMACY</title>
 
-    <meta name="theme-color" content="#087f5b">
-    <meta name="description" content="SMART PHARMACY - Pharmacy Management System">
-
     <link rel="stylesheet" href="css/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-    <!-- Header -->
-    <header class="top-header">
-        <div class="brand">
+<!-- ==============================
+     LOADING SCREEN
+================================== -->
+
+<div id="loadingScreen" class="loading-screen">
+    <div class="loader"></div>
+    <h2>SMART PHARMACY</h2>
+    <p data-i18n="loading">লোড হচ্ছে...</p>
+</div>
+
+
+<!-- ==============================
+     AUTHENTICATION SECTION
+================================== -->
+
+<section id="authSection" class="auth-section hidden">
+
+    <div class="auth-container">
+
+        <div class="auth-brand">
             <div class="brand-icon">💊</div>
-            <div>
-                <h1>SMART PHARMACY</h1>
-                <p>Pharmacy Management System</p>
-            </div>
+            <h1>SMART PHARMACY</h1>
+            <p data-i18n="authSubtitle">
+                আপনার ফার্মেসি পরিচালনার স্মার্ট সমাধান
+            </p>
         </div>
 
-        <div class="header-actions">
-            <button id="languageBtn" class="language-btn" type="button">
+        <!-- LANGUAGE BUTTON -->
+
+        <div class="auth-language">
+            <button type="button" id="languageBtn" class="language-btn">
                 English
             </button>
         </div>
-    </header>
 
 
-    <!-- Main Container -->
-    <main class="main-container">
+        <!-- LOGIN FORM -->
 
-        <!-- Authentication Section -->
-        <section id="authSection" class="auth-section">
+        <div id="loginBox" class="auth-card">
 
-            <div class="auth-heading">
-                <h2>স্বাগতম</h2>
-                <p>আপনার ফার্মেসি পরিচালনা করুন সহজেই</p>
+            <h2 data-i18n="loginTitle">লগইন করুন</h2>
+
+            <p data-i18n="loginSubtitle">
+                আপনার অ্যাকাউন্টে প্রবেশ করুন
+            </p>
+
+            <form id="loginForm">
+
+                <div class="form-group">
+                    <label data-i18n="email">ইমেইল</label>
+
+                    <input
+                        type="email"
+                        id="loginEmail"
+                        data-i18n-placeholder="emailPlaceholder"
+                        placeholder="আপনার ইমেইল লিখুন"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="password">পাসওয়ার্ড</label>
+
+                    <input
+                        type="password"
+                        id="loginPassword"
+                        data-i18n-placeholder="passwordPlaceholder"
+                        placeholder="পাসওয়ার্ড লিখুন"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="primary-btn">
+                    <span data-i18n="loginBtn">লগইন</span>
+                </button>
+
+            </form>
+
+            <button type="button" id="forgotPasswordBtn" class="text-btn"
+                    data-i18n="forgotPassword">
+                পাসওয়ার্ড ভুলে গেছেন?
+            </button>
+
+            <div class="auth-switch">
+                <span data-i18n="noAccount">অ্যাকাউন্ট নেই?</span>
+
+                <button type="button" id="showRegisterBtn" class="text-btn"
+                        data-i18n="registerNow">
+                    রেজিস্ট্রেশন করুন
+                </button>
             </div>
 
-            <!-- Registration Form -->
-            <div id="registerBox" class="auth-card">
+        </div>
 
-                <h3>নতুন ফার্মেসি নিবন্ধন</h3>
 
-                <form id="registerForm">
+        <!-- REGISTRATION FORM -->
 
-                    <label for="shopName">ফার্মেসির নাম *</label>
+        <div id="registerBox" class="auth-card hidden">
+
+            <h2 data-i18n="registerTitle">ফার্মেসি রেজিস্ট্রেশন</h2>
+
+            <p data-i18n="registerSubtitle">
+                আপনার ফার্মেসির অ্যাকাউন্ট তৈরি করুন
+            </p>
+
+            <form id="registerForm">
+
+                <div class="form-group">
+                    <label data-i18n="shopName">ফার্মেসির নাম</label>
+
                     <input
                         type="text"
                         id="shopName"
-                        placeholder="ফার্মেসির নাম লিখুন"
+                        placeholder="ফার্মেসির নাম"
+                        data-i18n-placeholder="shopNamePlaceholder"
                         required
                     >
+                </div>
 
-                    <label for="ownerName">মালিকের নাম *</label>
+                <div class="form-group">
+                    <label data-i18n="ownerName">মালিকের নাম</label>
+
                     <input
                         type="text"
                         id="ownerName"
-                        placeholder="মালিকের নাম লিখুন"
+                        placeholder="মালিকের নাম"
+                        data-i18n-placeholder="ownerNamePlaceholder"
                         required
                     >
+                </div>
 
-                    <label for="ownerMobile">মোবাইল নম্বর *</label>
+                <div class="form-group">
+                    <label data-i18n="mobile">মোবাইল নম্বর</label>
+
                     <input
                         type="tel"
                         id="ownerMobile"
-                        placeholder="01XXXXXXXXX"
+                        placeholder="মোবাইল নম্বর"
+                        data-i18n-placeholder="mobilePlaceholder"
                         required
                     >
+                </div>
 
-                    <label for="ownerEmail">ইমেইল ঠিকানা *</label>
+                <div class="form-group">
+                    <label data-i18n="address">ঠিকানা</label>
+
+                    <textarea
+                        id="ownerAddress"
+                        placeholder="ফার্মেসির ঠিকানা"
+                        data-i18n-placeholder="addressPlaceholder"
+                        required
+                    ></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="email">ইমেইল</label>
+
                     <input
                         type="email"
                         id="ownerEmail"
-                        placeholder="example@gmail.com"
+                        placeholder="ইমেইল"
+                        data-i18n-placeholder="emailPlaceholder"
                         required
                     >
+                </div>
 
-                    <label for="registerPassword">পাসওয়ার্ড *</label>
+                <div class="form-group">
+                    <label data-i18n="password">পাসওয়ার্ড</label>
+
                     <input
                         type="password"
                         id="registerPassword"
-                        placeholder="কমপক্ষে ৬ অক্ষরের পাসওয়ার্ড"
+                        placeholder="পাসওয়ার্ড তৈরি করুন"
+                        data-i18n-placeholder="createPasswordPlaceholder"
                         minlength="6"
                         required
                     >
+                </div>
 
-                    <label for="confirmPassword">পাসওয়ার্ড নিশ্চিত করুন *</label>
+                <div class="form-group">
+                    <label data-i18n="confirmPassword">
+                        পাসওয়ার্ড নিশ্চিত করুন
+                    </label>
+
                     <input
                         type="password"
                         id="confirmPassword"
                         placeholder="আবার পাসওয়ার্ড লিখুন"
-                        minlength="6"
+                        data-i18n-placeholder="confirmPasswordPlaceholder"
                         required
                     >
-
-                    <button type="submit" class="primary-btn">
-                        ফার্মেসি নিবন্ধন করুন
-                    </button>
-
-                </form>
-
-                <p class="auth-switch">
-                    আগে থেকেই অ্যাকাউন্ট আছে?
-                    <button type="button" id="showLoginBtn">
-                        লগইন করুন
-                    </button>
-                </p>
-
-            </div>
-
-
-            <!-- Login Form -->
-            <div id="loginBox" class="auth-card hidden">
-
-                <h3>ফার্মেসি লগইন</h3>
-
-                <form id="loginForm">
-
-                    <label for="loginEmail">ইমেইল ঠিকানা</label>
-                    <input
-                        type="email"
-                        id="loginEmail"
-                        placeholder="আপনার ইমেইল লিখুন"
-                        required
-                    >
-
-                    <label for="loginPassword">পাসওয়ার্ড</label>
-                    <input
-                        type="password"
-                        id="loginPassword"
-                        placeholder="আপনার পাসওয়ার্ড লিখুন"
-                        required
-                    >
-
-                    <button type="submit" class="primary-btn">
-                        লগইন করুন
-                    </button>
-
-                </form>
-
-                <button type="button" id="forgotPasswordBtn" class="text-btn">
-                    পাসওয়ার্ড ভুলে গেছেন?
-                </button>
-
-                <p class="auth-switch">
-                    নতুন ফার্মেসি?
-                    <button type="button" id="showRegisterBtn">
-                        নিবন্ধন করুন
-                    </button>
-                </p>
-
-            </div>
-
-            <div id="authMessage" class="message-box" aria-live="polite"></div>
-
-        </section>
-
-
-        <!-- Application Section -->
-        <section id="appSection" class="app-section hidden">
-
-            <!-- Shop Information -->
-            <div class="shop-header-card">
-                <div>
-                    <h2 id="displayShopName">SMART PHARMACY</h2>
-                    <p id="displayOwnerName">ফার্মেসির মালিক</p>
-                    <p id="displayMobile">মোবাইল নম্বর</p>
                 </div>
 
-                <button id="logoutBtn" class="logout-btn" type="button">
-                    লগআউট
+                <button type="submit" class="primary-btn">
+                    <span data-i18n="createAccount">
+                        অ্যাকাউন্ট তৈরি করুন
+                    </span>
+                </button>
+
+            </form>
+
+            <div class="auth-switch">
+                <span data-i18n="alreadyAccount">
+                    আগে থেকেই অ্যাকাউন্ট আছে?
+                </span>
+
+                <button type="button" id="showLoginBtn" class="text-btn"
+                        data-i18n="loginNow">
+                    লগইন করুন
                 </button>
             </div>
 
+        </div>
 
-            <!-- Navigation -->
-            <nav class="main-navigation">
+        <div id="authMessage" class="message-box" role="status"></div>
 
-                <button class="nav-btn active" data-page="dashboardPage">
-                    🏠 ড্যাশবোর্ড
+        <footer class="auth-footer">
+            <p>Powered by ATIK TECHNOLOGIES</p>
+        </footer>
+
+    </div>
+</section>
+
+
+<!-- ==============================
+     MAIN APPLICATION
+================================== -->
+
+<section id="appSection" class="app-section hidden">
+
+    <!-- HEADER -->
+
+    <header class="app-header">
+
+        <div class="header-brand">
+
+            <div class="brand-icon small">💊</div>
+
+            <div>
+                <h2>SMART PHARMACY</h2>
+                <p id="displayShopName">My Pharmacy</p>
+            </div>
+
+        </div>
+
+        <div class="header-actions">
+
+            <button type="button" id="languageBtnApp"
+                    class="language-btn">
+                English
+            </button>
+
+            <button type="button" id="notificationBtn"
+                    class="icon-btn" aria-label="Notifications">
+                🔔
+                <span id="notificationCount">0</span>
+            </button>
+
+            <button type="button" id="logoutBtn" class="logout-btn">
+                <span data-i18n="logout">লগআউট</span>
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- SHOP INFORMATION -->
+
+    <div class="shop-info-bar">
+
+        <span>
+            <strong data-i18n="owner">মালিক:</strong>
+            <span id="displayOwnerName">-</span>
+        </span>
+
+        <span>
+            <strong data-i18n="mobile">মোবাইল:</strong>
+            <span id="displayMobile">-</span>
+        </span>
+
+        <span>
+            <strong data-i18n="address">ঠিকানা:</strong>
+            <span id="displayAddress">-</span>
+        </span>
+
+    </div>
+
+
+    <!-- APPLICATION BODY -->
+
+    <div class="app-layout">
+
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+            <div class="sidebar-heading">
+                <span data-i18n="mainMenu">প্রধান মেনু</span>
+            </div>
+
+            <nav id="mainNavigation">
+
+                <button type="button" class="nav-item active"
+                        data-page="dashboardPage">
+                    <span>📊</span>
+                    <span data-i18n="dashboard">ড্যাশবোর্ড</span>
                 </button>
 
-                <button class="nav-btn" data-page="stockPage">
-                    💊 ওষুধের স্টক
+                <button type="button" class="nav-item"
+                        data-page="stockPage">
+                    <span>📦</span>
+                    <span data-i18n="stock">স্টক ব্যবস্থাপনা</span>
                 </button>
 
-                <button class="nav-btn" data-page="salesPage">
-                    🧾 বিক্রয় ও বিল
+                <button type="button" class="nav-item"
+                        data-page="salesPage">
+                    <span>🛒</span>
+                    <span data-i18n="sales">বিক্রয়</span>
                 </button>
 
-                <button class="nav-btn" data-page="purchasePage">
-                    📦 ক্রয়
+                <button type="button" class="nav-item"
+                        data-page="purchasePage">
+                    <span>🧾</span>
+                    <span data-i18n="purchase">ক্রয়</span>
                 </button>
 
-                <button class="nav-btn" data-page="employeePage">
-                    👥 কর্মচারী
+                <button type="button" class="nav-item"
+                        data-page="supplierPage">
+                    <span>🚚</span>
+                    <span data-i18n="suppliers">সরবরাহকারী</span>
                 </button>
 
-                <button class="nav-btn" data-page="reportsPage">
-                    📊 রিপোর্ট
+                <button type="button" class="nav-item"
+                        data-page="customerPage">
+                    <span>👥</span>
+                    <span data-i18n="customers">কাস্টমার</span>
                 </button>
 
-                <button class="nav-btn" data-page="supportPage">
-                    🛟 সাপোর্ট
+                <button type="button" class="nav-item"
+                        data-page="employeePage">
+                    <span>🧑‍💼</span>
+                    <span data-i18n="employees">কর্মচারী</span>
+                </button>
+
+                <button type="button" class="nav-item"
+                        data-page="incomeExpensePage">
+                    <span>💰</span>
+                    <span data-i18n="incomeExpense">
+                        আয় ও ব্যয়
+                    </span>
+                </button>
+
+                <button type="button" class="nav-item"
+                        data-page="reportsPage">
+                    <span>📈</span>
+                    <span data-i18n="reports">রিপোর্ট</span>
+                </button>
+
+                <button type="button" class="nav-item"
+                        data-page="supportPage">
+                    <span>🎧</span>
+                    <span data-i18n="support">সাপোর্ট</span>
+                </button>
+
+                <button type="button" class="nav-item"
+                        data-page="settingsPage">
+                    <span>⚙️</span>
+                    <span data-i18n="settings">সেটিংস</span>
                 </button>
 
             </nav>
 
+            <div class="sidebar-footer">
+                <p>ATIK TECHNOLOGIES</p>
+                <small>SMART PHARMACY</small>
+            </div>
 
-            <!-- Dashboard -->
-            <section id="dashboardPage" class="content-page">
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+
+        <main class="main-content">
+
+
+            <!-- DASHBOARD -->
+
+            <section id="dashboardPage" class="page-section">
 
                 <div class="page-heading">
-                    <h2>ড্যাশবোর্ড</h2>
-                    <p>আপনার ফার্মেসির সার্বিক অবস্থা</p>
+                    <div>
+                        <h1 data-i18n="dashboard">ড্যাশবোর্ড</h1>
+                        <p data-i18n="dashboardSubtitle">
+                            আপনার ফার্মেসির সার্বিক অবস্থা
+                        </p>
+                    </div>
                 </div>
 
-                <div class="dashboard-grid">
 
-                    <div class="dashboard-card">
-                        <span>💰</span>
-                        <h3>আজকের বিক্রয়</h3>
+                <div class="stats-grid">
+
+                    <div class="stat-card">
+                        <div class="stat-icon">💵</div>
+                        <h3 data-i18n="todaySales">আজকের বিক্রয়</h3>
                         <strong id="todaySales">৳ 0.00</strong>
                     </div>
 
-                    <div class="dashboard-card">
-                        <span>📦</span>
-                        <h3>মোট ক্রয়</h3>
+                    <div class="stat-card">
+                        <div class="stat-icon">🛍️</div>
+                        <h3 data-i18n="totalPurchase">মোট ক্রয়</h3>
                         <strong id="totalPurchase">৳ 0.00</strong>
                     </div>
 
-                    <div class="dashboard-card">
-                        <span>💵</span>
-                        <h3>আজকের লাভ</h3>
+                    <div class="stat-card">
+                        <div class="stat-icon">📈</div>
+                        <h3 data-i18n="todayProfit">আজকের লাভ</h3>
                         <strong id="todayProfit">৳ 0.00</strong>
                     </div>
 
-                    <div class="dashboard-card">
-                        <span>⚠️</span>
-                        <h3>কম স্টক</h3>
+                    <div class="stat-card">
+                        <div class="stat-icon">⚠️</div>
+                        <h3 data-i18n="lowStock">কম স্টক</h3>
                         <strong id="lowStockCount">0</strong>
                     </div>
 
-                    <div class="dashboard-card">
-                        <span>⏰</span>
-                        <h3>মেয়াদ শেষের সতর্কতা</h3>
+                    <div class="stat-card">
+                        <div class="stat-icon">⏳</div>
+                        <h3 data-i18n="expiryAlert">মেয়াদ শেষের সতর্কতা</h3>
                         <strong id="expiryCount">0</strong>
                     </div>
 
-                    <div class="dashboard-card">
-                        <span>👥</span>
-                        <h3>মোট কর্মচারী</h3>
+                    <div class="stat-card">
+                        <div class="stat-icon">👨‍💼</div>
+                        <h3 data-i18n="employeeCount">কর্মচারী</h3>
                         <strong id="employeeCount">0</strong>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">🧾</div>
+                        <h3 data-i18n="invoiceCount">মোট ইনভয়েস</h3>
+                        <strong id="invoiceCount">0</strong>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">📒</div>
+                        <h3 data-i18n="customerDue">কাস্টমার বকেয়া</h3>
+                        <strong id="customerDue">৳ 0.00</strong>
                     </div>
 
                 </div>
 
-                <div class="information-card">
-                    <h3>📢 গুরুত্বপূর্ণ তথ্য</h3>
-                    <p>
-                        SMART PHARMACY-তে আপনার ওষুধের স্টক,
-                        বিক্রয়, ক্রয় এবং হিসাব পরিচালনা করুন।
-                    </p>
+
+                <div class="dashboard-grid">
+
+                    <div class="content-card">
+                        <h3 data-i18n="recentSales">সাম্প্রতিক বিক্রয়</h3>
+
+                        <div class="table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th data-i18n="invoice">ইনভয়েস</th>
+                                        <th data-i18n="date">তারিখ</th>
+                                        <th data-i18n="amount">পরিমাণ</th>
+                                        <th data-i18n="status">অবস্থা</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="recentSalesBody">
+                                    <tr>
+                                        <td colspan="4"
+                                            data-i18n="noData">
+                                            কোনো তথ্য নেই
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+                    <div class="content-card">
+                        <h3 data-i18n="importantAlerts">
+                            গুরুত্বপূর্ণ সতর্কতা
+                        </h3>
+
+                        <div id="dashboardAlerts">
+                            <p data-i18n="noAlerts">
+                                বর্তমানে কোনো সতর্কতা নেই।
+                            </p>
+                        </div>
+                    </div>
+
                 </div>
 
             </section>
 
 
-            <!-- Medicine Stock -->
-            <section id="stockPage" class="content-page hidden">
+            <!-- STOCK MANAGEMENT -->
+
+            <section id="stockPage" class="page-section hidden">
 
                 <div class="page-heading">
-                    <h2>💊 ওষুধের স্টক</h2>
-                    <p>নতুন ওষুধ ও ব্যাচভিত্তিক স্টক যোগ করুন</p>
+                    <div>
+                        <h1 data-i18n="stock">স্টক ব্যবস্থাপনা</h1>
+                        <p data-i18n="stockSubtitle">
+                            ওষুধের স্টক যোগ ও পরিচালনা করুন
+                        </p>
+                    </div>
                 </div>
 
-                <div class="form-card">
 
-                    <h3>নতুন স্টক যোগ করুন</h3>
+                <div class="content-card">
+
+                    <h3 data-i18n="addMedicine">নতুন ওষুধ যোগ করুন</h3>
 
                     <form id="stockForm">
 
                         <div class="form-grid">
 
-                            <div>
-                                <label for="medicineName">
-                                    ওষুধের নাম *
+                            <div class="form-group">
+                                <label data-i18n="medicineName">
+                                    ওষুধের নাম
                                 </label>
-                                <input
-                                    type="text"
-                                    id="medicineName"
-                                    placeholder="ওষুধের নাম"
-                                    required
-                                >
+
+                                <input type="text" id="medicineName" required>
                             </div>
 
-                            <div>
-                                <label for="medicineCompany">
-                                    কোম্পানি / প্রস্তুতকারক *
+                            <div class="form-group">
+                                <label data-i18n="manufacturer">
+                                    প্রস্তুতকারক কোম্পানি
                                 </label>
-                                <input
-                                    type="text"
-                                    id="medicineCompany"
-                                    placeholder="কোম্পানির নাম"
-                                    required
-                                >
+
+                                <input type="text" id="medicineCompany" required>
                             </div>
 
-                            <div>
-                                <label for="boxQuantity">
-                                    বক্স / কার্টনের সংখ্যা (ঐচ্ছিক)
+                            <div class="form-group">
+                                <label data-i18n="boxQuantity">
+                                    বক্স/কার্টনের সংখ্যা (ঐচ্ছিক)
                                 </label>
-                                <input
-                                    type="number"
-                                    id="boxQuantity"
-                                    min="0"
-                                    placeholder="বক্সের সংখ্যা"
-                                >
+
+                                <input type="number" id="boxQuantity" min="0">
                             </div>
 
-                            <div>
-                                <label for="piecesPerBox">
-                                    প্রতি বক্সে পিস
+                            <div class="form-group">
+                                <label data-i18n="piecesPerBox">
+                                    প্রতি বক্সে পিস (ঐচ্ছিক)
                                 </label>
-                                <input
-                                    type="number"
-                                    id="piecesPerBox"
-                                    min="1"
-                                    placeholder="প্রতি বক্সে কত পিস"
-                                >
+
+                                <input type="number" id="piecesPerBox" min="1">
                             </div>
 
-                            <div>
-                                <label for="totalPieces">
-                                    মোট পিস *
+                            <div class="form-group">
+                                <label data-i18n="totalPieces">
+                                    মোট পিস
                                 </label>
-                                <input
-                                    type="number"
-                                    id="totalPieces"
-                                    min="1"
-                                    placeholder="মোট পিসের সংখ্যা"
-                                    required
-                                >
+
+                                <input type="number" id="totalPieces"
+                                       min="1" required>
                             </div>
 
-                            <div>
-                                <label for="purchasePrice">
-                                    প্রতি পিস ক্রয়মূল্য *
+                            <div class="form-group">
+                                <label data-i18n="purchasePrice">
+                                    প্রতি পিস ক্রয়মূল্য
                                 </label>
-                                <input
-                                    type="number"
-                                    id="purchasePrice"
-                                    min="0"
-                                    step="0.01"
-                                    placeholder="৳"
-                                    required
-                                >
+
+                                <input type="number" id="purchasePrice"
+                                       min="0" step="0.01" required>
                             </div>
 
-                            <div>
-                                <label for="sellingPrice">
-                                    প্রতি পিস বিক্রয়মূল্য *
+                            <div class="form-group">
+                                <label data-i18n="sellingPrice">
+                                    প্রতি পিস বিক্রয়মূল্য
                                 </label>
-                                <input
-                                    type="number"
-                                    id="sellingPrice"
-                                    min="0"
-                                    step="0.01"
-                                    placeholder="৳"
-                                    required
-                                >
+
+                                <input type="number" id="sellingPrice"
+                                       min="0" step="0.01" required>
                             </div>
 
-                            <div>
-                                <label for="rackNumber">
+                            <div class="form-group">
+                                <label data-i18n="rackNumber">
                                     র‍্যাক নম্বর (ঐচ্ছিক)
                                 </label>
-                                <input
-                                    type="text"
-                                    id="rackNumber"
-                                    placeholder="যেমন: A-01"
-                                >
+
+                                <input type="text" id="rackNumber">
                             </div>
 
-                            <div>
-                                <label for="batchNumber">
-                                    ব্যাচ নম্বর (ঐচ্ছিক)
+                            <div class="form-group">
+                                <label data-i18n="batchNumber">
+                                    ব্যাচ নম্বর
                                 </label>
-                                <input
-                                    type="text"
-                                    id="batchNumber"
-                                    placeholder="ব্যাচ নম্বর"
-                                >
+
+                                <input type="text" id="batchNumber">
                             </div>
 
-                            <div>
-                                <label for="expiryDate">
-                                    মেয়াদ শেষের তারিখ *
+                            <div class="form-group">
+                                <label data-i18n="expiryDate">
+                                    মেয়াদ শেষের তারিখ
                                 </label>
-                                <input
-                                    type="date"
-                                    id="expiryDate"
-                                    required
-                                >
+
+                                <input type="date" id="expiryDate" required>
                             </div>
 
                         </div>
 
                         <button type="submit" class="primary-btn">
-                            স্টক যোগ করুন
+                            <span data-i18n="saveStock">স্টক সংরক্ষণ করুন</span>
                         </button>
 
                     </form>
 
                 </div>
 
-                <div class="table-card">
-                    <h3>ওষুধের তালিকা</h3>
+
+                <div class="content-card">
+
+                    <div class="section-toolbar">
+                        <h3 data-i18n="stockList">স্টক তালিকা</h3>
+
+                        <input
+                            type="search"
+                            id="stockListSearch"
+                            data-i18n-placeholder="searchMedicine"
+                            placeholder="ওষুধ খুঁজুন..."
+                        >
+                    </div>
 
                     <div class="table-responsive">
+
                         <table>
                             <thead>
                                 <tr>
-                                    <th>ওষুধ</th>
-                                    <th>কোম্পানি</th>
-                                    <th>মোট পিস</th>
-                                    <th>ক্রয়মূল্য</th>
-                                    <th>বিক্রয়মূল্য</th>
-                                    <th>র‍্যাক</th>
-                                    <th>মেয়াদ</th>
+                                    <th data-i18n="medicineName">ওষুধ</th>
+                                    <th data-i18n="manufacturer">কোম্পানি</th>
+                                    <th data-i18n="availablePieces">স্টক</th>
+                                    <th data-i18n="purchasePrice">ক্রয়মূল্য</th>
+                                    <th data-i18n="sellingPrice">বিক্রয়মূল্য</th>
+                                    <th data-i18n="rackNumber">র‍্যাক</th>
+                                    <th data-i18n="expiryDate">মেয়াদ</th>
                                 </tr>
                             </thead>
 
                             <tbody id="stockTableBody">
                                 <tr>
-                                    <td colspan="7">
-                                        এখনো কোনো স্টক যোগ করা হয়নি।
+                                    <td colspan="7" data-i18n="noData">
+                                        কোনো তথ্য নেই
                                     </td>
                                 </tr>
                             </tbody>
+
                         </table>
+
                     </div>
+
                 </div>
 
             </section>
 
 
-            <!-- Sales -->
-            <section id="salesPage" class="content-page hidden">
+            <!-- SALES -->
+
+            <section id="salesPage" class="page-section hidden">
 
                 <div class="page-heading">
-                    <h2>🧾 বিক্রয় ও বিল</h2>
-                    <p>ওষুধ বিক্রি ও বিল তৈরি করুন</p>
+                    <div>
+                        <h1 data-i18n="sales">বিক্রয়</h1>
+                        <p data-i18n="salesSubtitle">
+                            ওষুধ বিক্রয় ও ইনভয়েস তৈরি করুন
+                        </p>
+                    </div>
                 </div>
 
-                <div class="form-card">
 
-                    <h3>ওষুধ খুঁজুন</h3>
+                <div class="content-card">
+
+                    <h3 data-i18n="searchMedicine">ওষুধ খুঁজুন</h3>
 
                     <input
                         type="search"
                         id="medicineSearch"
-                        placeholder="ওষুধের নাম লিখে খুঁজুন..."
+                        data-i18n-placeholder="searchMedicine"
+                        placeholder="ওষুধের নাম লিখুন..."
                     >
 
-                    <div id="medicineSearchResults"></div>
+                    <div id="medicineSearchResults"
+                         class="search-results"></div>
 
-                    <h3>বিক্রয়ের তালিকা</h3>
+                </div>
+
+
+                <div class="content-card">
+
+                    <h3 data-i18n="salesCart">বিক্রয়ের তালিকা</h3>
 
                     <div class="table-responsive">
+
                         <table>
+
                             <thead>
                                 <tr>
-                                    <th>ওষুধ</th>
-                                    <th>পরিমাণ</th>
-                                    <th>প্রতি পিস মূল্য</th>
-                                    <th>মোট</th>
+                                    <th data-i18n="medicineName">ওষুধ</th>
+                                    <th data-i18n="quantity">পরিমাণ (পিস)</th>
+                                    <th data-i18n="unitPrice">প্রতি পিস মূল্য</th>
+                                    <th data-i18n="total">মোট</th>
+                                    <th data-i18n="action">অ্যাকশন</th>
                                 </tr>
                             </thead>
 
                             <tbody id="cartTableBody">
                                 <tr>
-                                    <td colspan="4">
-                                        এখনো কোনো ওষুধ নির্বাচন করা হয়নি।
+                                    <td colspan="5" data-i18n="emptyCart">
+                                        বিক্রয়ের তালিকা খালি
                                     </td>
                                 </tr>
                             </tbody>
+
                         </table>
+
                     </div>
 
-                    <h3>
-                        সর্বমোট:
-                        <span id="cartTotal">৳ 0.00</span>
-                    </h3>
 
-                    <button id="completeSaleBtn" class="primary-btn" type="button">
-                        বিক্রয় সম্পন্ন করুন
+                    <div class="sales-summary">
+
+                        <h3>
+                            <span data-i18n="grandTotal">সর্বমোট:</span>
+                            <span id="cartTotal">৳ 0.00</span>
+                        </h3>
+
+                    </div>
+
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+                            <label data-i18n="customer">কাস্টমার</label>
+
+                            <select id="saleCustomer">
+                                <option value="" data-i18n="walkInCustomer">
+                                    সাধারণ কাস্টমার
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label data-i18n="discount">ছাড়</label>
+
+                            <input type="number" id="saleDiscount"
+                                   min="0" value="0">
+                        </div>
+
+                        <div class="form-group">
+                            <label data-i18n="amountPaid">পরিশোধিত টাকা</label>
+
+                            <input type="number" id="saleAmountPaid"
+                                   min="0" value="0">
+                        </div>
+
+                    </div>
+
+
+                    <button type="button" id="completeSaleBtn"
+                            class="primary-btn">
+                        <span data-i18n="completeSale">
+                            বিক্রয় সম্পন্ন করুন
+                        </span>
                     </button>
 
                 </div>
@@ -509,68 +791,707 @@
             </section>
 
 
-            <!-- Purchase -->
-            <section id="purchasePage" class="content-page hidden">
+            <!-- PURCHASE -->
+
+            <section id="purchasePage" class="page-section hidden">
 
                 <div class="page-heading">
-                    <h2>📦 ক্রয় ব্যবস্থাপনা</h2>
-                    <p>ওষুধ কেনা ও সরবরাহকারীর তথ্য</p>
+                    <div>
+                        <h1 data-i18n="purchase">ক্রয় ব্যবস্থাপনা</h1>
+                        <p data-i18n="purchaseSubtitle">
+                            সরবরাহকারীর কাছ থেকে ওষুধ ক্রয় করুন
+                        </p>
+                    </div>
                 </div>
 
-                <div class="information-card">
-                    <p>
-                        ব্যাচভিত্তিক ক্রয় ও সরবরাহকারীর হিসাব
-                        পরবর্তী উন্নয়ন ধাপে যুক্ত করা হবে।
-                    </p>
+                <div class="content-card">
+
+                    <h3 data-i18n="newPurchase">নতুন ক্রয়</h3>
+
+                    <form id="purchaseForm">
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+                                <label data-i18n="supplier">সরবরাহকারী</label>
+                                <select id="purchaseSupplier" required>
+                                    <option value="">নির্বাচন করুন</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label data-i18n="invoice">ইনভয়েস নম্বর</label>
+                                <input type="text" id="purchaseInvoice">
+                            </div>
+
+                            <div class="form-group">
+                                <label data-i18n="purchaseDate">ক্রয়ের তারিখ</label>
+                                <input type="date" id="purchaseDate" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label data-i18n="amountPaid">পরিশোধিত টাকা</label>
+                                <input type="number" id="purchasePaid"
+                                       min="0" value="0">
+                            </div>
+
+                        </div>
+
+                        <div class="purchase-items">
+                            <h4 data-i18n="purchaseItems">ক্রয়ের পণ্য</h4>
+
+                            <div id="purchaseItemsContainer"></div>
+
+                            <button type="button" id="addPurchaseItemBtn"
+                                    class="secondary-btn">
+                                + <span data-i18n="addMedicine">ওষুধ যোগ করুন</span>
+                            </button>
+                        </div>
+
+                        <button type="submit" class="primary-btn">
+                            <span data-i18n="savePurchase">
+                                ক্রয় সংরক্ষণ করুন
+                            </span>
+                        </button>
+
+                    </form>
+
+                </div>
+
+                <div class="content-card">
+                    <h3 data-i18n="purchaseHistory">ক্রয়ের ইতিহাস</h3>
+
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th data-i18n="invoice">ইনভয়েস</th>
+                                    <th data-i18n="supplier">সরবরাহকারী</th>
+                                    <th data-i18n="date">তারিখ</th>
+                                    <th data-i18n="amount">পরিমাণ</th>
+                                    <th data-i18n="due">বকেয়া</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="purchaseTableBody">
+                                <tr>
+                                    <td colspan="5" data-i18n="noData">
+                                        কোনো তথ্য নেই
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
             </section>
 
 
-            <!-- Employees -->
-            <section id="employeePage" class="content-page hidden">
+            <!-- SUPPLIERS -->
+
+            <section id="supplierPage" class="page-section hidden">
 
                 <div class="page-heading">
-                    <h2>👥 কর্মচারী ব্যবস্থাপনা</h2>
-                    <p>কর্মচারীদের অ্যাকাউন্ট ও দায়িত্ব পরিচালনা করুন</p>
+                    <h1 data-i18n="suppliers">সরবরাহকারী ব্যবস্থাপনা</h1>
                 </div>
 
-                <div class="information-card">
-                    <p>
-                        মালিক কর্মচারীর অ্যাকাউন্ট তৈরি ও নিষ্ক্রিয়
-                        করতে পারবেন। এই ফিচার পরবর্তী ধাপে যুক্ত হবে।
-                    </p>
+                <div class="content-card">
+
+                    <h3 data-i18n="addSupplier">নতুন সরবরাহকারী</h3>
+
+                    <form id="supplierForm">
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+                                <label data-i18n="supplierName">নাম</label>
+                                <input type="text" id="supplierName" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label data-i18n="mobile">মোবাইল</label>
+                                <input type="tel" id="supplierMobile">
+                            </div>
+
+                            <div class="form-group">
+                                <label data-i18n="address">ঠিকানা</label>
+                                <input type="text" id="supplierAddress">
+                            </div>
+
+                            <div class="form-group">
+                                <label data-i18n="openingDue">প্রারম্ভিক বকেয়া</label>
+                                <input type="number" id="supplierOpeningDue"
+                                       min="0" value="0">
+                            </div>
+
+                        </div>
+
+                        <button type="submit" class="primary-btn">
+                            <span data-i18n="saveSupplier">সংরক্ষণ করুন</span>
+                        </button>
+
+                    </form>
+
+                </div>
+
+                <div class="content-card">
+
+                    <h3 data-i18n="supplierList">সরবরাহকারী তালিকা</h3>
+
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th data-i18n="supplierName">নাম</th>
+                                    <th data-i18n="mobile">মোবাইল</th>
+                                    <th data-i18n="address">ঠিকানা</th>
+                                    <th data-i18n="due">বকেয়া</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="supplierTableBody"></tbody>
+                        </table>
+                    </div>
+
                 </div>
 
             </section>
 
 
-            <!-- Reports -->
-            <section id="reportsPage" class="content-page hidden">
+            <!-- CUSTOMERS -->
+
+            <section id="customerPage" class="page-section hidden">
 
                 <div class="page-heading">
-                    <h2>📊 রিপোর্ট</h2>
-                    <p>বিক্রয়, ক্রয়, লাভ ও ব্যয়ের রিপোর্ট</p>
+                    <h1 data-i18n="customers">কাস্টমার ব্যবস্থাপনা</h1>
                 </div>
 
-                <div class="information-card">
-                    <p>
-                        বিস্তারিত রিপোর্ট ও PDF ডাউনলোড
-                        পরবর্তী ধাপে যুক্ত করা হবে।
-                    </p>
+                <div class="content-card">
+
+                    <h3 data-i18n="addCustomer">নতুন কাস্টমার</h3>
+
+                    <form id="customerForm">
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+                                <label data-i18n="customerName">নাম</label>
+                                <input type="text" id="customerName" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label data-i18n="mobile">মোবাইল</label>
+                                <input type="tel" id="customerMobile">
+                            </div>
+
+                            <div class="form-group">
+                                <label data-i18n="address">ঠিকানা</label>
+                                <input type="text" id="customerAddress">
+                            </div>
+
+                            <div class="form-group">
+                                <label data-i18n="note">নোট</label>
+                                <input type="text" id="customerNote">
+                            </div>
+
+                        </div>
+
+                        <button type="submit" class="primary-btn">
+                            <span data-i18n="saveCustomer">সংরক্ষণ করুন</span>
+                        </button>
+
+                    </form>
+
+                </div>
+
+                <div class="content-card">
+
+                    <h3 data-i18n="customerList">কাস্টমার তালিকা</h3>
+
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th data-i18n="customerName">নাম</th>
+                                    <th data-i18n="mobile">মোবাইল</th>
+                                    <th data-i18n="address">ঠিকানা</th>
+                                    <th data-i18n="due">বকেয়া</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="customerTableBody"></tbody>
+                        </table>
+                    </div>
+
                 </div>
 
             </section>
 
 
-            <!-- Support -->
-            <section id="supportPage" class="content-page hidden">
+            <!-- EMPLOYEES -->
+
+            <section id="employeePage" class="page-section hidden">
 
                 <div class="page-heading">
-                    <h2>🛟 সাপোর্ট সেন্টার</h2>
-                    <p>সাহায্য ও সমস্যা জানানোর ব্যবস্থা</p>
+                    <h1 data-i18n="employees">কর্মচারী ব্যবস্থাপনা</h1>
                 </div>
 
-                <div class="information-card">
-                    <p>
-                        প্রয়োজনে Developer Support
+                <div class="content-card">
+
+                    <h3 data-i18n="addEmployee">নতুন কর্মচারী</h3>
+
+                    <form id="employeeForm">
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+                                <label data-i18n="employeeName">নাম</label>
+                                <input type="text" id="employeeName" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label data-i18n="mobile">মোবাইল</label>
+                                <input type="tel" id="employeeMobile" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label data-i18n="email">ইমেইল</label>
+                                <input type="email" id="employeeEmail" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label data-i18n="role">পদবি</label>
+
+                                <select id="employeeRole" required>
+                                    <option value="staff" data-i18n="staff">
+                                        স্টাফ
+                                    </option>
+                                    <option value="manager" data-i18n="manager">
+                                        ম্যানেজার
+                                    </option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <button type="submit" class="primary-btn">
+                            <span data-i18n="createEmployee">
+                                কর্মচারী অ্যাকাউন্ট তৈরি করুন
+                            </span>
+                        </button>
+
+                    </form>
+
+                    <p class="info-note" data-i18n="employeeSecurityNote">
+                        কর্মচারীর অ্যাকাউন্ট নিরাপদ Backend-এর মাধ্যমে তৈরি হবে।
+                    </p>
+
+                </div>
+
+                <div class="content-card">
+
+                    <h3 data-i18n="employeeList">কর্মচারী তালিকা</h3>
+
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th data-i18n="employeeName">নাম</th>
+                                    <th data-i18n="mobile">মোবাইল</th>
+                                    <th data-i18n="role">পদবি</th>
+                                    <th data-i18n="status">অবস্থা</th>
+                                    <th data-i18n="action">অ্যাকশন</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="employeeTableBody"></tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- INCOME AND EXPENSE -->
+
+            <section id="incomeExpensePage" class="page-section hidden">
+
+                <div class="page-heading">
+                    <h1 data-i18n="incomeExpense">আয় ও ব্যয়</h1>
+                </div>
+
+                <div class="content-card">
+
+                    <h3 data-i18n="addTransaction">নতুন লেনদেন</h3>
+
+                    <form id="incomeExpenseForm">
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+                                <label data-i18n="transactionType">ধরন</label>
+
+                                <select id="transactionType" required>
+                                    <option value="income" data-i18n="income">
+                                        আয়
+                                    </option>
+                                    <option value="expense" data-i18n="expense">
+                                        ব্যয়
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label data-i18n="category">ক্যাটাগরি</label>
+                                <input type="text" id="transactionCategory"
+                                       required>
+                            </div>
+
+                            <div class="form-group">
+                                <label data-i18n="amount">পরিমাণ</label>
+                                <input type="number" id="transactionAmount"
+                                       min="0.01" step="0.01" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label data-i18n="date">তারিখ</label>
+                                <input type="date" id="transactionDate" required>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label data-i18n="description">বিবরণ</label>
+                            <textarea id="transactionDescription"></textarea>
+                        </div>
+
+                        <button type="submit" class="primary-btn">
+                            <span data-i18n="saveTransaction">
+                                সংরক্ষণ করুন
+                            </span>
+                        </button>
+
+                    </form>
+
+                </div>
+
+                <div class="content-card">
+
+                    <h3 data-i18n="transactionHistory">লেনদেনের ইতিহাস</h3>
+
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th data-i18n="date">তারিখ</th>
+                                    <th data-i18n="transactionType">ধরন</th>
+                                    <th data-i18n="category">ক্যাটাগরি</th>
+                                    <th data-i18n="amount">পরিমাণ</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="transactionTableBody"></tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- REPORTS -->
+
+            <section id="reportsPage" class="page-section hidden">
+
+                <div class="page-heading">
+                    <h1 data-i18n="reports">রিপোর্ট</h1>
+                </div>
+
+                <div class="content-card">
+
+                    <h3 data-i18n="reportFilter">রিপোর্ট নির্বাচন</h3>
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+                            <label data-i18n="fromDate">শুরুর তারিখ</label>
+                            <input type="date" id="reportFromDate">
+                        </div>
+
+                        <div class="form-group">
+                            <label data-i18n="toDate">শেষের তারিখ</label>
+                            <input type="date" id="reportToDate">
+                        </div>
+
+                        <div class="form-group">
+                            <label data-i18n="reportType">রিপোর্টের ধরন</label>
+
+                            <select id="reportType">
+                                <option value="sales" data-i18n="sales">
+                                    বিক্রয়
+                                </option>
+                                <option value="purchase" data-i18n="purchase">
+                                    ক্রয়
+                                </option>
+                                <option value="profit" data-i18n="profit">
+                                    লাভ
+                                </option>
+                                <option value="expense" data-i18n="expense">
+                                    ব্যয়
+                                </option>
+                                <option value="stock" data-i18n="stock">
+                                    স্টক
+                                </option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <button type="button" id="generateReportBtn"
+                            class="primary-btn">
+                        <span data-i18n="generateReport">
+                            রিপোর্ট তৈরি করুন
+                        </span>
+                    </button>
+
+                    <button type="button" id="printReportBtn"
+                            class="secondary-btn">
+                        🖨️ <span data-i18n="print">প্রিন্ট</span>
+                    </button>
+
+                    <button type="button" id="exportReportBtn"
+                            class="secondary-btn">
+                        📥 <span data-i18n="exportCSV">CSV ডাউনলোড</span>
+                    </button>
+
+                </div>
+
+                <div class="content-card" id="reportResult">
+                    <h3 data-i18n="reportResult">রিপোর্ট ফলাফল</h3>
+                    <div id="reportContent"></div>
+                </div>
+
+            </section>
+
+
+            <!-- SUPPORT -->
+
+            <section id="supportPage" class="page-section hidden">
+
+                <div class="page-heading">
+                    <h1 data-i18n="support">সাপোর্ট সেন্টার</h1>
+                </div>
+
+                <div class="content-card">
+
+                    <h3 data-i18n="needHelp">আপনার কি সাহায্য প্রয়োজন?</h3>
+
+                    <form id="supportForm">
+
+                        <div class="form-group">
+                            <label data-i18n="subject">বিষয়</label>
+                            <input type="text" id="supportSubject" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label data-i18n="message">বিস্তারিত</label>
+                            <textarea id="supportMessage" required></textarea>
+                        </div>
+
+                        <button type="submit" class="primary-btn">
+                            <span data-i18n="submitRequest">
+                                সাপোর্ট অনুরোধ পাঠান
+                            </span>
+                        </button>
+
+                    </form>
+
+                </div>
+
+                <div class="content-card">
+
+                    <h3 data-i18n="supportHistory">সাপোর্ট অনুরোধের ইতিহাস</h3>
+
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th data-i18n="subject">বিষয়</th>
+                                    <th data-i18n="date">তারিখ</th>
+                                    <th data-i18n="status">অবস্থা</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="supportTableBody"></tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- SETTINGS -->
+
+            <section id="settingsPage" class="page-section hidden">
+
+                <div class="page-heading">
+                    <h1 data-i18n="settings">সেটিংস</h1>
+                </div>
+
+                <div class="content-card">
+
+                    <h3 data-i18n="pharmacySettings">
+                        ফার্মেসির সেটিংস
+                    </h3>
+
+                    <form id="settingsForm">
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+                                <label data-i18n="shopName">ফার্মেসির নাম</label>
+                                <input type="text" id="settingsShopName">
+                            </div>
+
+                            <div class="form-group">
+                                <label data-i18n="mobile">মোবাইল</label>
+                                <input type="tel" id="settingsMobile">
+                            </div>
+
+                            <div class="form-group">
+                                <label data-i18n="address">ঠিকানা</label>
+                                <input type="text" id="settingsAddress">
+                            </div>
+
+                            <div class="form-group">
+                                <label data-i18n="lowStockThreshold">
+                                    কম স্টকের সীমা
+                                </label>
+
+                                <input type="number" id="lowStockThreshold"
+                                       min="1" value="10">
+                            </div>
+
+                            <div class="form-group">
+                                <label data-i18n="expiryAlertDays">
+                                    মেয়াদ সতর্কতার দিন
+                                </label>
+
+                                <input type="number" id="expiryAlertDays"
+                                       min="1" value="30">
+                            </div>
+
+                        </div>
+
+                        <button type="submit" class="primary-btn">
+                            <span data-i18n="saveSettings">
+                                সেটিংস সংরক্ষণ করুন
+                            </span>
+                        </button>
+
+                    </form>
+
+                </div>
+
+
+                <div class="content-card">
+
+                    <h3 data-i18n="accountSecurity">
+                        অ্যাকাউন্ট নিরাপত্তা
+                    </h3>
+
+                    <button type="button" id="settingsPasswordResetBtn"
+                            class="secondary-btn">
+                        <span data-i18n="resetPassword">
+                            পাসওয়ার্ড রিসেট করুন
+                        </span>
+                    </button>
+
+                </div>
+
+
+                <div class="content-card">
+
+                    <h3 data-i18n="backupRestore">
+                        ব্যাকআপ ও রিস্টোর
+                    </h3>
+
+                    <p data-i18n="backupDescription">
+                        আপনার ফার্মেসির তথ্যের ব্যাকআপ ও পুনরুদ্ধার ব্যবস্থা।
+                    </p>
+
+                    <button type="button" id="backupBtn"
+                            class="secondary-btn">
+                        <span data-i18n="createBackup">
+                            ব্যাকআপ তৈরি করুন
+                        </span>
+                    </button>
+
+                    <input type="file" id="restoreFile"
+                           accept=".json" hidden>
+
+                    <button type="button" id="restoreBtn"
+                            class="secondary-btn">
+                        <span data-i18n="restoreBackup">
+                            ব্যাকআপ রিস্টোর করুন
+                        </span>
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- GLOBAL MESSAGE -->
+
+            <div id="appMessage" class="message-box"
+                 role="status"></div>
+
+
+        </main>
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <footer class="app-footer">
+        <p>
+            © <span id="currentYear"></span>
+            SMART PHARMACY |
+            Powered by ATIK TECHNOLOGIES
+        </p>
+    </footer>
+
+</section>
+
+
+<!-- ==============================
+     MODAL
+================================== -->
+
+<div id="modalOverlay" class="modal-overlay hidden">
+
+    <div class="modal-box">
+
+        <button type="button" id="modalCloseBtn"
+                class="modal-close">×</button>
+
+        <div id="modalContent"></div>
+
+    </div>
+
+</div>
+
+
+<!-- ==============================
+     JAVASCRIPT
+================================== -->
+
+<script type="module" src="js/firebase.js"></script>
+<script type="module" src="js/app.js"></script>
+
+</body>
+</html>
